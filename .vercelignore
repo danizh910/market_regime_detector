@@ -1,0 +1,10 @@
+modeling/
+reports/
+data/
+logs/
+dist/
+node_modules/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.pyc
