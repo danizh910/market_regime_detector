@@ -3,6 +3,9 @@ const state = {
   manifest: null,
   activeRunId: null,
   activeTab: "stats",
+  selectedRegion: "All",
+  selectedSymbol: null,
+  selectedTimeframe: null,
   tables: new Map(),
 };
 
@@ -72,13 +75,50 @@ const availableFilters = () => {
 const activeRun = () =>
   state.manifest.runs.find((run) => run.id === state.activeRunId) ?? state.manifest.runs[0];
 
+const runsForSelection = () =>
+  state.manifest.runs.filter((run) => {
+    const regionMatch = state.selectedRegion === "All" || run.region === state.selectedRegion;
+    const symbolMatch = state.selectedSymbol == null || run.symbol === state.selectedSymbol;
+    const timeframeMatch = state.selectedTimeframe == null || run.timeframe === state.selectedTimeframe;
+    return regionMatch && symbolMatch && timeframeMatch;
+  });
+
+const syncFiltersFromRun = (run) => {
+  state.selectedRegion = run.region;
+  state.selectedSymbol = run.symbol;
+  state.selectedTimeframe = run.timeframe;
+};
+
 const setActiveRun = async (runId) => {
   state.activeRunId = runId;
+  syncFiltersFromRun(activeRun());
   await render();
 };
 
 const setActiveTab = async (tab) => {
   state.activeTab = tab;
+  await render();
+};
+
+const setFilter = async (key, value) => {
+  if (key === "selectedRegion") {
+    state.selectedRegion = value;
+    const regionRuns = state.manifest.runs.filter(
+      (run) => value === "All" || run.region === value,
+    );
+    state.selectedSymbol = regionRuns[0]?.symbol ?? null;
+    state.selectedTimeframe = regionRuns[0]?.timeframe ?? null;
+  }
+  if (key === "selectedSymbol") {
+    state.selectedSymbol = value;
+    const symbolRuns = state.manifest.runs.filter((run) => run.symbol === value);
+    state.selectedTimeframe = symbolRuns[0]?.timeframe ?? null;
+  }
+
+  const candidate = runsForSelection()[0];
+  if (candidate) {
+    state.activeRunId = candidate.id;
+  }
   await render();
 };
 
@@ -220,6 +260,17 @@ const render = async () => {
   const run = activeRun();
   const runs = state.manifest.runs;
   const filters = availableFilters();
+  const regionRuns = runs.filter((item) => state.selectedRegion === "All" || item.region === state.selectedRegion);
+  const symbolOptions = [...new Map(regionRuns.map((item) => [item.symbol, item])).values()];
+  const timeframeOptions = runs
+    .filter((item) => item.symbol === run.symbol)
+    .map((item) => item.timeframe);
+  const uniqueTimeframes = [...new Set(timeframeOptions)];
+  const visibleSnapshotRuns = runs.filter((item) => {
+    const regionMatch = state.selectedRegion === "All" || item.region === state.selectedRegion;
+    const symbolMatch = state.selectedSymbol == null || item.symbol === state.selectedSymbol;
+    return regionMatch && symbolMatch;
+  });
   const grouped = runs.reduce((acc, item) => {
     acc[item.region] = (acc[item.region] ?? 0) + 1;
     return acc;
@@ -236,15 +287,46 @@ const render = async () => {
           </div>
         </div>
         <label>
-          Instrument
-          <select id="run-select">
-            ${runs
+          Region / market
+          <select id="region-select">
+            ${filters.regions
               .map(
-                (item) => `
-                  <option value="${item.id}" ${item.id === run.id ? "selected" : ""}>
-                    ${item.symbol} · ${item.timeframe}
+                (region) => `
+                  <option value="${region}" ${region === state.selectedRegion ? "selected" : ""}>
+                    ${region}
                   </option>
                 `,
+              )
+              .join("")}
+          </select>
+        </label>
+        <label>
+          Instrument
+          <select id="symbol-select">
+            ${symbolOptions
+              .map(
+                (item) => `
+                  <option value="${item.symbol}" ${item.symbol === run.symbol ? "selected" : ""}>
+                    ${item.assetName} (${item.symbol})
+                  </option>
+                `,
+              )
+              .join("")}
+          </select>
+        </label>
+        <label>
+          Timeframe
+          <select id="timeframe-select">
+            ${uniqueTimeframes
+              .map(
+                (timeframe) => {
+                  const sample = runs.find((item) => item.symbol === run.symbol && item.timeframe === timeframe);
+                  return `
+                    <option value="${timeframe}" ${timeframe === run.timeframe ? "selected" : ""}>
+                      ${sample?.timeframeLabel ?? timeframe}
+                    </option>
+                  `;
+                },
               )
               .join("")}
           </select>
@@ -312,7 +394,7 @@ const render = async () => {
         </section>
 
         ${await renderTabs(run)}
-        ${renderSnapshot(runs)}
+        ${renderSnapshot(visibleSnapshotRuns)}
 
         <footer>
           Educational project only. The full-sample HMM labels are explanatory and include look-ahead bias.
@@ -322,8 +404,15 @@ const render = async () => {
     </main>
   `;
 
-  document.querySelector("#run-select").addEventListener("change", (event) => {
-    setActiveRun(event.target.value);
+  document.querySelector("#region-select").addEventListener("change", (event) => {
+    setFilter("selectedRegion", event.target.value);
+  });
+  document.querySelector("#symbol-select").addEventListener("change", (event) => {
+    setFilter("selectedSymbol", event.target.value);
+  });
+  document.querySelector("#timeframe-select").addEventListener("change", (event) => {
+    const next = runs.find((item) => item.symbol === run.symbol && item.timeframe === event.target.value);
+    if (next) setActiveRun(next.id);
   });
   document.querySelectorAll("[data-run]").forEach((button) => {
     button.addEventListener("click", () => setActiveRun(button.dataset.run));
@@ -337,6 +426,7 @@ const bootstrap = async () => {
   const response = await fetch("/manifest.json");
   state.manifest = await response.json();
   state.activeRunId = state.manifest.runs.find((run) => run.id === "BTC-USD_1d")?.id ?? state.manifest.runs[0].id;
+  syncFiltersFromRun(activeRun());
   await render();
 };
 

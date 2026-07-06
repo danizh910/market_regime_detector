@@ -71,8 +71,9 @@ computed, but mainly for regime statistics rather than direct state fitting.
 
 ```powershell
 cd "C:\Users\tukib\OneDrive - bbw.ch\Claude\Quantprojekte\market_regime_detector"
-python -m pip install -r requirements.txt
-python -m pip install -e .
+python -m pip install -r modeling\requirements.txt
+python -m pip install -e modeling
+npm install
 ```
 
 Run the local Streamlit dashboard:
@@ -202,11 +203,16 @@ serverless functions. This repo now includes a Vercel-ready static dashboard:
 - `public/reports/...`
 - `vercel.json`
 
+Important: the Python modeling package now lives in `modeling/`, so the repository root
+is a plain static web project for Vercel. This avoids Vercel detecting `pyproject.toml`
+as a Python app and searching for a Python entrypoint.
+
 Vercel settings:
 
 | Setting | Value |
 | --- | --- |
 | Framework preset | Other |
+| Root directory | repository root |
 | Install command | `npm install` |
 | Build command | `npm run build` |
 | Output directory | `dist` |
@@ -224,8 +230,9 @@ Then connect the GitHub repo in Vercel and deploy from `main`.
 ## Tests
 
 ```powershell
-pytest
-ruff check .
+$env:PYTHONPATH="modeling\src"
+pytest modeling\tests
+ruff check modeling\src modeling\tests scripts
 npm audit
 npm run build
 ```

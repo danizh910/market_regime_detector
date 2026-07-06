@@ -3,13 +3,16 @@ from __future__ import annotations
 import csv
 import json
 import shutil
+import sys
 from pathlib import Path
 
-from market_regime_hmm.timeframes import TIMEFRAMES
-from market_regime_hmm.universe import ASSET_UNIVERSE, get_asset
-
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "modeling" / "src"))
+
+from market_regime_hmm.timeframes import TIMEFRAMES  # noqa: E402
+from market_regime_hmm.universe import ASSET_UNIVERSE, get_asset  # noqa: E402
+
+
 PUBLIC = ROOT / "public"
 PUBLIC_REPORTS = PUBLIC / "reports"
 
