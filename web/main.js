@@ -1,5 +1,3 @@
-import "./styles.css";
-
 const app = document.querySelector("#app");
 const state = {
   manifest: null,
