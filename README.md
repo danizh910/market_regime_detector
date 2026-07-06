@@ -3,7 +3,7 @@
 Portfolio-quality quantitative finance project for detecting market regimes across equities,
 crypto, and regional benchmarks with a Gaussian Hidden Markov Model.
 
-**Suggested repo description:** Multi-asset market-regime dashboard for BTC, ETH, global equities, Switzerland, and China using rolling time-series features and Hidden Markov Models.
+**Suggested repo description:** Vercel-ready multi-asset market-regime dashboard for BTC, ETH, global equities, Switzerland, and China using rolling time-series features and Hidden Markov Models.
 
 ## What This Project Shows
 
@@ -50,7 +50,8 @@ recent rolling periods for intraday data and longer start dates for daily/weekly
   transition probabilities between them.
 - **Model selection:** BIC over 2 to 4 states by default. The upper bound is intentional:
   more states can fit the past better but often become harder to explain.
-- **Dashboard:** Streamlit, because it keeps the project simple, local, and recruiter-friendly.
+- **Dashboards:** a static Vercel dashboard for deployment, plus an optional Streamlit dashboard
+  for local interactive re-fitting.
 
 ## Feature Engineering
 
@@ -74,7 +75,7 @@ python -m pip install -r requirements.txt
 python -m pip install -e .
 ```
 
-Run the dashboard:
+Run the local Streamlit dashboard:
 
 ```powershell
 market-regimes-dashboard
@@ -91,12 +92,24 @@ market-regimes --ticker 000300.SS --timeframe 1d --project-root .
 
 ## Dashboard
 
-The Streamlit dashboard has two views:
+The project has two dashboard layers:
+
+- **Vercel static dashboard:** modern portfolio UI built with plain HTML/CSS/JS and precomputed
+  HMM artifacts. This is the recommended public deployment.
+- **Local Streamlit dashboard:** useful when you want to re-fit models interactively from the UI.
+
+The deployed dashboard shows:
 
 - **Single analysis:** choose one market and timeframe, then inspect the shaded price chart,
   regime stats, transition matrix, model-selection table, and regime-conditional strategy diagnostic.
 - **Multi-asset snapshot:** run a compact scan across selected assets and timeframes to compare
   current detected regimes.
+
+Refresh the static dashboard data after generating new reports:
+
+```powershell
+npm run export:static
+```
 
 ## Example Outputs
 
@@ -176,11 +189,45 @@ git commit -m "Build multi-asset market regime dashboard"
 git push -u origin main
 ```
 
+## Vercel Deployment
+
+The first Streamlit-only version is not a good fit for Vercel because Streamlit expects a
+long-running Python web server. Vercel is much happier hosting a static frontend or short
+serverless functions. This repo now includes a Vercel-ready static dashboard:
+
+- `index.html`
+- `web/main.js`
+- `web/styles.css`
+- `public/manifest.json`
+- `public/reports/...`
+- `vercel.json`
+
+Vercel settings:
+
+| Setting | Value |
+| --- | --- |
+| Framework preset | Other |
+| Install command | `npm install` |
+| Build command | `npm run build` |
+| Output directory | `dist` |
+
+Local production build:
+
+```powershell
+npm install
+npm run export:static
+npm run build
+```
+
+Then connect the GitHub repo in Vercel and deploy from `main`.
+
 ## Tests
 
 ```powershell
 pytest
 ruff check .
+npm audit
+npm run build
 ```
 
 ## Educational Disclaimer

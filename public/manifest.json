@@ -1,0 +1,527 @@
+{
+  "generatedAt": "2026-07-06",
+  "project": "Market Regime Detector",
+  "method": "Gaussian Hidden Markov Model with BIC state selection",
+  "assets": [
+    {
+      "symbol": "BTC-USD",
+      "name": "Bitcoin",
+      "region": "Crypto",
+      "asset_class": "Crypto",
+      "description": "Large-cap digital asset"
+    },
+    {
+      "symbol": "ETH-USD",
+      "name": "Ethereum",
+      "region": "Crypto",
+      "asset_class": "Crypto",
+      "description": "Large-cap smart-contract asset"
+    },
+    {
+      "symbol": "^GSPC",
+      "name": "S&P 500",
+      "region": "Global / US",
+      "asset_class": "Equity index",
+      "description": "Broad US equity benchmark"
+    },
+    {
+      "symbol": "^IXIC",
+      "name": "Nasdaq Composite",
+      "region": "Global / US",
+      "asset_class": "Equity index",
+      "description": "US growth and technology-heavy benchmark"
+    },
+    {
+      "symbol": "ACWI",
+      "name": "iShares MSCI ACWI ETF",
+      "region": "Global",
+      "asset_class": "ETF",
+      "description": "Global developed and emerging equity proxy"
+    },
+    {
+      "symbol": "^STOXX50E",
+      "name": "Euro Stoxx 50",
+      "region": "Europe",
+      "asset_class": "Equity index",
+      "description": "Eurozone blue-chip benchmark"
+    },
+    {
+      "symbol": "^SSMI",
+      "name": "Swiss Market Index",
+      "region": "Switzerland",
+      "asset_class": "Equity index",
+      "description": "Swiss blue-chip equity benchmark"
+    },
+    {
+      "symbol": "CHSPI.SW",
+      "name": "Swiss Performance Index",
+      "region": "Switzerland",
+      "asset_class": "Equity index",
+      "description": "Broad Swiss equity benchmark"
+    },
+    {
+      "symbol": "000300.SS",
+      "name": "CSI 300",
+      "region": "China",
+      "asset_class": "Equity index",
+      "description": "Mainland China large-cap A-share benchmark"
+    },
+    {
+      "symbol": "000001.SS",
+      "name": "Shanghai Composite",
+      "region": "China",
+      "asset_class": "Equity index",
+      "description": "Broad Shanghai equity benchmark"
+    },
+    {
+      "symbol": "^HSI",
+      "name": "Hang Seng Index",
+      "region": "China / Hong Kong",
+      "asset_class": "Equity index",
+      "description": "Hong Kong-listed China and regional benchmark"
+    }
+  ],
+  "timeframes": {
+    "15m": {
+      "key": "15m",
+      "label": "Short-term 15 minute",
+      "interval": "15m",
+      "period": "60d",
+      "start": null,
+      "short_window": 16,
+      "medium_window": 64,
+      "drawdown_window": 192,
+      "strategy_window": 96,
+      "trading_periods_per_year": 6552,
+      "crypto_periods_per_year": 35040
+    },
+    "1h": {
+      "key": "1h",
+      "label": "Short-term 1 hour",
+      "interval": "1h",
+      "period": "730d",
+      "start": null,
+      "short_window": 24,
+      "medium_window": 72,
+      "drawdown_window": 240,
+      "strategy_window": 160,
+      "trading_periods_per_year": 1764,
+      "crypto_periods_per_year": 8760
+    },
+    "1d": {
+      "key": "1d",
+      "label": "Daily",
+      "interval": "1d",
+      "period": null,
+      "start": "2000-01-01",
+      "short_window": 21,
+      "medium_window": 63,
+      "drawdown_window": 126,
+      "strategy_window": 200,
+      "trading_periods_per_year": 252,
+      "crypto_periods_per_year": 365
+    },
+    "1wk": {
+      "key": "1wk",
+      "label": "Weekly",
+      "interval": "1wk",
+      "period": null,
+      "start": "2000-01-01",
+      "short_window": 4,
+      "medium_window": 13,
+      "drawdown_window": 26,
+      "strategy_window": 40,
+      "trading_periods_per_year": 52,
+      "crypto_periods_per_year": 52
+    },
+    "1mo": {
+      "key": "1mo",
+      "label": "Monthly",
+      "interval": "1mo",
+      "period": null,
+      "start": "2000-01-01",
+      "short_window": 3,
+      "medium_window": 6,
+      "drawdown_window": 12,
+      "strategy_window": 10,
+      "trading_periods_per_year": 12,
+      "crypto_periods_per_year": 12
+    }
+  },
+  "runs": [
+    {
+      "id": "000300_SS_1d",
+      "symbol": "000300.SS",
+      "safeSymbol": "000300_SS",
+      "assetName": "CSI 300",
+      "region": "China",
+      "assetClass": "Equity index",
+      "description": "Mainland China large-cap A-share benchmark",
+      "timeframe": "1d",
+      "timeframeLabel": "Daily",
+      "latest": {
+        "date": "2026-07-06",
+        "regime": 1,
+        "regimeName": "High-volatility / sideways",
+        "annualizedReturn": 0.03370364985645291,
+        "annualizedVolatility": 0.20826838186571112,
+        "frequency": 0.25856443719412725
+      },
+      "bestModel": {
+        "states": 4,
+        "bic": 10956.063753144,
+        "aic": 10674.930586736711
+      },
+      "paths": {
+        "priceChart": "/reports/figures/000300_SS_1d_price_regimes.png",
+        "transitionChart": "/reports/figures/000300_SS_1d_transition_matrix.png",
+        "strategyChart": "/reports/figures/000300_SS_1d_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/000300_SS_1d_model_selection.png",
+        "regimeStats": "/reports/tables/000300_SS_1d_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/000300_SS_1d_transition_matrix.csv",
+        "strategy": "/reports/tables/000300_SS_1d_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/000300_SS_1d_model_selection.csv"
+      }
+    },
+    {
+      "id": "BTC-USD_15m",
+      "symbol": "BTC-USD",
+      "safeSymbol": "BTC-USD",
+      "assetName": "Bitcoin",
+      "region": "Crypto",
+      "assetClass": "Crypto",
+      "description": "Large-cap digital asset",
+      "timeframe": "15m",
+      "timeframeLabel": "Short-term 15 minute",
+      "latest": {
+        "date": "2026-07-06 13:00:00+00:00",
+        "regime": 1,
+        "regimeName": "Bear / drawdown",
+        "annualizedReturn": -0.9964834919561554,
+        "annualizedVolatility": 0.3606696444108743,
+        "frequency": 0.3159199574995573
+      },
+      "bestModel": {
+        "states": 4,
+        "bic": 47423.851343703536,
+        "aic": 47058.71295967153
+      },
+      "paths": {
+        "priceChart": "/reports/figures/BTC-USD_15m_price_regimes.png",
+        "transitionChart": "/reports/figures/BTC-USD_15m_transition_matrix.png",
+        "strategyChart": "/reports/figures/BTC-USD_15m_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/BTC-USD_15m_model_selection.png",
+        "regimeStats": "/reports/tables/BTC-USD_15m_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/BTC-USD_15m_transition_matrix.csv",
+        "strategy": "/reports/tables/BTC-USD_15m_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/BTC-USD_15m_model_selection.csv"
+      }
+    },
+    {
+      "id": "BTC-USD_1d",
+      "symbol": "BTC-USD",
+      "safeSymbol": "BTC-USD",
+      "assetName": "Bitcoin",
+      "region": "Crypto",
+      "assetClass": "Crypto",
+      "description": "Large-cap digital asset",
+      "timeframe": "1d",
+      "timeframeLabel": "Daily",
+      "latest": {
+        "date": "2026-07-06",
+        "regime": 4,
+        "regimeName": "Calm / low-volatility",
+        "annualizedReturn": -0.0003928957969743241,
+        "annualizedVolatility": 0.34181047350454935,
+        "frequency": 0.20903954802259886
+      },
+      "bestModel": {
+        "states": 6,
+        "bic": 33475.783680939494,
+        "aic": 32872.134342461926
+      },
+      "paths": {
+        "priceChart": "/reports/figures/BTC-USD_1d_price_regimes.png",
+        "transitionChart": "/reports/figures/BTC-USD_1d_transition_matrix.png",
+        "strategyChart": "/reports/figures/BTC-USD_1d_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/BTC-USD_1d_model_selection.png",
+        "regimeStats": "/reports/tables/BTC-USD_1d_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/BTC-USD_1d_transition_matrix.csv",
+        "strategy": "/reports/tables/BTC-USD_1d_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/BTC-USD_1d_model_selection.csv"
+      }
+    },
+    {
+      "id": "BTC-USD_1h",
+      "symbol": "BTC-USD",
+      "safeSymbol": "BTC-USD",
+      "assetName": "Bitcoin",
+      "region": "Crypto",
+      "assetClass": "Crypto",
+      "description": "Large-cap digital asset",
+      "timeframe": "1h",
+      "timeframeLabel": "Short-term 1 hour",
+      "latest": {
+        "date": "2026-07-06 13:00:00+00:00",
+        "regime": 1,
+        "regimeName": "Calm / bull",
+        "annualizedReturn": 0.07888903007622217,
+        "annualizedVolatility": 0.25839025387625064,
+        "frequency": 0.2542127511726215
+      },
+      "bestModel": {
+        "states": 4,
+        "bic": 150649.25948853948,
+        "aic": 150222.64273393233
+      },
+      "paths": {
+        "priceChart": "/reports/figures/BTC-USD_1h_price_regimes.png",
+        "transitionChart": "/reports/figures/BTC-USD_1h_transition_matrix.png",
+        "strategyChart": "/reports/figures/BTC-USD_1h_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/BTC-USD_1h_model_selection.png",
+        "regimeStats": "/reports/tables/BTC-USD_1h_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/BTC-USD_1h_transition_matrix.csv",
+        "strategy": "/reports/tables/BTC-USD_1h_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/BTC-USD_1h_model_selection.csv"
+      }
+    },
+    {
+      "id": "BTC-USD_1wk",
+      "symbol": "BTC-USD",
+      "safeSymbol": "BTC-USD",
+      "assetName": "Bitcoin",
+      "region": "Crypto",
+      "assetClass": "Crypto",
+      "description": "Large-cap digital asset",
+      "timeframe": "1wk",
+      "timeframeLabel": "Weekly",
+      "latest": {
+        "date": "2026-07-06",
+        "regime": 3,
+        "regimeName": "Calm / low-volatility",
+        "annualizedReturn": -0.4730701609913598,
+        "annualizedVolatility": 0.4568169672122071,
+        "frequency": 0.2980132450331126
+      },
+      "bestModel": {
+        "states": 4,
+        "bic": 5788.4259787299225,
+        "aic": 5546.229397843507
+      },
+      "paths": {
+        "priceChart": "/reports/figures/BTC-USD_1wk_price_regimes.png",
+        "transitionChart": "/reports/figures/BTC-USD_1wk_transition_matrix.png",
+        "strategyChart": "/reports/figures/BTC-USD_1wk_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/BTC-USD_1wk_model_selection.png",
+        "regimeStats": "/reports/tables/BTC-USD_1wk_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/BTC-USD_1wk_transition_matrix.csv",
+        "strategy": "/reports/tables/BTC-USD_1wk_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/BTC-USD_1wk_model_selection.csv"
+      }
+    },
+    {
+      "id": "ETH-USD_1d",
+      "symbol": "ETH-USD",
+      "safeSymbol": "ETH-USD",
+      "assetName": "Ethereum",
+      "region": "Crypto",
+      "assetClass": "Crypto",
+      "description": "Large-cap smart-contract asset",
+      "timeframe": "1d",
+      "timeframeLabel": "Daily",
+      "latest": {
+        "date": "2026-07-06",
+        "regime": 0,
+        "regimeName": "Calm / bull",
+        "annualizedReturn": 0.3096489906212705,
+        "annualizedVolatility": 0.5165144560442927,
+        "frequency": 0.2855759922555663
+      },
+      "bestModel": {
+        "states": 4,
+        "bic": 28245.226385102378,
+        "aic": 27913.09047342405
+      },
+      "paths": {
+        "priceChart": "/reports/figures/ETH-USD_1d_price_regimes.png",
+        "transitionChart": "/reports/figures/ETH-USD_1d_transition_matrix.png",
+        "strategyChart": "/reports/figures/ETH-USD_1d_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/ETH-USD_1d_model_selection.png",
+        "regimeStats": "/reports/tables/ETH-USD_1d_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/ETH-USD_1d_transition_matrix.csv",
+        "strategy": "/reports/tables/ETH-USD_1d_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/ETH-USD_1d_model_selection.csv"
+      }
+    },
+    {
+      "id": "ETH-USD_1mo",
+      "symbol": "ETH-USD",
+      "safeSymbol": "ETH-USD",
+      "assetName": "Ethereum",
+      "region": "Crypto",
+      "assetClass": "Crypto",
+      "description": "Large-cap smart-contract asset",
+      "timeframe": "1mo",
+      "timeframeLabel": "Monthly",
+      "latest": {
+        "date": "2026-07-01",
+        "regime": 3,
+        "regimeName": "Bear / drawdown",
+        "annualizedReturn": -0.5384569527282216,
+        "annualizedVolatility": 0.6675580234345795,
+        "frequency": 0.30303030303030304
+      },
+      "bestModel": {
+        "states": 4,
+        "bic": 1144.3275555954706,
+        "aic": 1001.5959638380682
+      },
+      "paths": {
+        "priceChart": "/reports/figures/ETH-USD_1mo_price_regimes.png",
+        "transitionChart": "/reports/figures/ETH-USD_1mo_transition_matrix.png",
+        "strategyChart": "/reports/figures/ETH-USD_1mo_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/ETH-USD_1mo_model_selection.png",
+        "regimeStats": "/reports/tables/ETH-USD_1mo_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/ETH-USD_1mo_transition_matrix.csv",
+        "strategy": "/reports/tables/ETH-USD_1mo_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/ETH-USD_1mo_model_selection.csv"
+      }
+    },
+    {
+      "id": "GSPC_1d",
+      "symbol": "^GSPC",
+      "safeSymbol": "GSPC",
+      "assetName": "S&P 500",
+      "region": "Global / US",
+      "assetClass": "Equity index",
+      "description": "Broad US equity benchmark",
+      "timeframe": "1d",
+      "timeframeLabel": "Daily",
+      "latest": {
+        "date": "2026-07-02",
+        "regime": 3,
+        "regimeName": "Bear / drawdown",
+        "annualizedReturn": -0.08620197357076531,
+        "annualizedVolatility": 0.14272281574416007,
+        "frequency": 0.3052567792758673
+      },
+      "bestModel": {
+        "states": 4,
+        "bic": 38239.193463714706,
+        "aic": 37865.46975997182
+      },
+      "paths": {
+        "priceChart": "/reports/figures/GSPC_1d_price_regimes.png",
+        "transitionChart": "/reports/figures/GSPC_1d_transition_matrix.png",
+        "strategyChart": "/reports/figures/GSPC_1d_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/GSPC_1d_model_selection.png",
+        "regimeStats": "/reports/tables/GSPC_1d_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/GSPC_1d_transition_matrix.csv",
+        "strategy": "/reports/tables/GSPC_1d_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/GSPC_1d_model_selection.csv"
+      }
+    },
+    {
+      "id": "GSPC_1h",
+      "symbol": "^GSPC",
+      "safeSymbol": "GSPC",
+      "assetName": "S&P 500",
+      "region": "Global / US",
+      "assetClass": "Equity index",
+      "description": "Broad US equity benchmark",
+      "timeframe": "1h",
+      "timeframeLabel": "Short-term 1 hour",
+      "latest": {
+        "date": "2026-07-02 19:30:00+00:00",
+        "regime": 2,
+        "regimeName": "Stress / bear",
+        "annualizedReturn": -0.37443815328817465,
+        "annualizedVolatility": 0.15360833949113248,
+        "frequency": 0.28582834331337326
+      },
+      "bestModel": {
+        "states": 4,
+        "bic": 34859.64505735155,
+        "aic": 34501.089541677204
+      },
+      "paths": {
+        "priceChart": "/reports/figures/GSPC_1h_price_regimes.png",
+        "transitionChart": "/reports/figures/GSPC_1h_transition_matrix.png",
+        "strategyChart": "/reports/figures/GSPC_1h_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/GSPC_1h_model_selection.png",
+        "regimeStats": "/reports/tables/GSPC_1h_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/GSPC_1h_transition_matrix.csv",
+        "strategy": "/reports/tables/GSPC_1h_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/GSPC_1h_model_selection.csv"
+      }
+    },
+    {
+      "id": "HSI_1d",
+      "symbol": "^HSI",
+      "safeSymbol": "HSI",
+      "assetName": "Hang Seng Index",
+      "region": "China / Hong Kong",
+      "assetClass": "Equity index",
+      "description": "Hong Kong-listed China and regional benchmark",
+      "timeframe": "1d",
+      "timeframeLabel": "Daily",
+      "latest": {
+        "date": "2026-07-06",
+        "regime": 3,
+        "regimeName": "Bear / drawdown",
+        "annualizedReturn": -0.18131738857153068,
+        "annualizedVolatility": 0.1890228824010385,
+        "frequency": 0.3746326372776489
+      },
+      "bestModel": {
+        "states": 4,
+        "bic": 49790.12999239695,
+        "aic": 49417.55128638062
+      },
+      "paths": {
+        "priceChart": "/reports/figures/HSI_1d_price_regimes.png",
+        "transitionChart": "/reports/figures/HSI_1d_transition_matrix.png",
+        "strategyChart": "/reports/figures/HSI_1d_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/HSI_1d_model_selection.png",
+        "regimeStats": "/reports/tables/HSI_1d_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/HSI_1d_transition_matrix.csv",
+        "strategy": "/reports/tables/HSI_1d_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/HSI_1d_model_selection.csv"
+      }
+    },
+    {
+      "id": "SSMI_1d",
+      "symbol": "^SSMI",
+      "safeSymbol": "SSMI",
+      "assetName": "Swiss Market Index",
+      "region": "Switzerland",
+      "assetClass": "Equity index",
+      "description": "Swiss blue-chip equity benchmark",
+      "timeframe": "1d",
+      "timeframeLabel": "Daily",
+      "latest": {
+        "date": "2026-07-06",
+        "regime": 3,
+        "regimeName": "Calm / bull",
+        "annualizedReturn": 0.36661660302035814,
+        "annualizedVolatility": 0.09564880067265295,
+        "frequency": 0.35088784337532253
+      },
+      "bestModel": {
+        "states": 4,
+        "bic": 42333.20933940048,
+        "aic": 41959.585711500215
+      },
+      "paths": {
+        "priceChart": "/reports/figures/SSMI_1d_price_regimes.png",
+        "transitionChart": "/reports/figures/SSMI_1d_transition_matrix.png",
+        "strategyChart": "/reports/figures/SSMI_1d_strategy_by_regime.png",
+        "modelSelectionChart": "/reports/figures/SSMI_1d_model_selection.png",
+        "regimeStats": "/reports/tables/SSMI_1d_regime_stats.csv",
+        "transitionMatrix": "/reports/tables/SSMI_1d_transition_matrix.csv",
+        "strategy": "/reports/tables/SSMI_1d_strategy_by_regime.csv",
+        "modelSelection": "/reports/tables/SSMI_1d_model_selection.csv"
+      }
+    }
+  ]
+}

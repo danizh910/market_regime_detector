@@ -1,0 +1,13 @@
+{
+  "name": "market-regime-detector-dashboard",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 5173",
+    "build": "node scripts/build_static_site.mjs",
+    "export:static": "python scripts/export_static_dashboard.py"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

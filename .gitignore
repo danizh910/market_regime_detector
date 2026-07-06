@@ -6,6 +6,8 @@ __pycache__/
 *.egg-info/
 .ipynb_checkpoints/
 logs/
+node_modules/
+dist/
 
 # Raw and processed market data are reproducible via the pipeline.
 data/raw/
