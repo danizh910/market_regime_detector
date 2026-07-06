@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "market-regime-hmm"
+version = "0.1.0"
+description = "Detect and explain market regimes from index price data using a Hidden Markov Model."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Tuki" }]
+dependencies = [
+    "hmmlearn>=0.3.2",
+    "matplotlib>=3.8",
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scikit-learn>=1.4",
+    "seaborn>=0.13",
+    "streamlit>=1.36",
+    "yfinance>=0.2.40",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[project.scripts]
+market-regimes = "market_regime_hmm.cli:main"
+market-regimes-dashboard = "market_regime_hmm.dashboard:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
